@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimizando Proyecto</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col col-md-8 mr-md-auto ml-md-auto">
+                <div id="contenido">
+                    <header>
+                        <h1 class="text-center">Cotiza tu seguro de Auto</h1>
+                    </header>
+                    <div class="row contenido-formulario">
+                        <div class="col col-md-10 mr-md-auto ml-md-auto">
+                            <form action="#" id="cotizar-seguro">
+                                <div class="form-group">
+                                    <label for="dominio">Ingrese Dominio: </label>                                   
+                                    <input class="form-control" id="dominio" type="text"/>                                    
+                                </div>
+                                <div class="form-group">
+                                    <label for="marca">Seleccione Marca: </label>
+                                    <select name="marca" class="form-control" id="marca">
+                                        <option value="JEEP">JEEP</option>
+                                        <option value="RENAULT">RENAULT</option>
+                                        <option value="TOYOTA">TOYOTA</option>
+                                        <option value="VW">VW</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="modelo">Ingrese Modelo: </label>
+                                    <select name="modelo" class="form-control" id="modelo">
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tipo">Tipo Vehículo:</label>
+                                    <select name="tipo" class="form-control" id="tipo">                                       
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="anio">Año:</label>
+                                    <input class="form-control" id="anio" type="number" min="1990" max="2022"/>
+                                </div>
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <!-- <legend class="col-form-legend col-12">Tipo Seguro</legend> -->
+
+                                        <div class="form-group">
+                                            <label for="tipo_seguro">Tipo Seguro: </label>
+                                            <select class="form-control" id="tipo_seguro">
+                                                <option value="">- Seleccionar -</option>
+                                                <option value="BASICA">BASICA</option>
+                                                <option value="COMPLETA">COMPLETA</option>
+                                            </select>                                            
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                
+                                <div id="resultado"></div>
+                                <div class="form-group">
+                                    <button type="button" id="cotizar" class="btn btn-raised btn-primary">Cotizar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--#contenido-->
+            </div>
+        </div>
+    </div>
+
+    <div class="container_resumen" id="resumen">
+
+    </div>    
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
