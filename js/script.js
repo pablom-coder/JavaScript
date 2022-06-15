@@ -5,7 +5,13 @@ const anio = document.getElementById('anio');
 const tipo = document.getElementById('tipo');
 const tipo_seguro = document.getElementById('tipo_seguro');
 const btnCotizarSeguro = document.getElementById('cotizar');
+const btnNuevo=document.getElementById('nuevo');
+const btnRemover = document.getElementById('removDiv');
+const btnLimpiar = document.getElementById('limpiar');
+const contenido = document.getElementById('contenido');
 btnCotizarSeguro.addEventListener('click', cotizarSeguro);
+// btnRemover.addEventListener('click', mostrar);
+
 
 const vehiculos = [{
     marca: 'RENAULT',
@@ -122,7 +128,6 @@ function mostrarTipoVehiculo(vehiculosUsuarios) {
         console.log(option2);
         tipo.innerHTML += option2;
     }
-
 }
 
 //Este evento modifica el contenido de los select 
@@ -153,8 +158,10 @@ function recuperarCotizacionStorage(ca) {
 
 
 
+
 function cotizarSeguro() {
     alert("BIENVENIDO");
+
     const dominio = document.getElementById('dominio').value;
     const marca = document.getElementById('marca').value;
     const modelo = document.getElementById('modelo').value;
@@ -167,7 +174,10 @@ function cotizarSeguro() {
     //vehículo nacional se adiciona 10% e importado 20%
 
     tipo == 'NACIONAL' ? cantidad = base * 1.10 : cantidad = base * 1.20;
-    
+    // const dateTime = luxon.DateTime;
+    // const fecha =dateTime.now();
+    // console.log(fecha.year().toString());
+
     const diferencia = new Date().getFullYear() - anio;
     console.log(diferencia);
 
@@ -180,7 +190,7 @@ function cotizarSeguro() {
 
     tipo_seguro == 'COMPLETA' ? cantidad = cantidad * 1.50 : cantidad = cantidad * 1.25;
 
-    if (dominio === '' || marca === '' || modelo === '' || anio === '' || tipo_seguro === '' || tipo === '') {
+    if (dominio === '' || marca === '' || modelo === '' || anio === '' || tipo_seguro === 'Seleccionar' || tipo === '') {
         alert("Faltan Datos, revisa e intenta de nuevo");
     } else {
         let divID = document.getElementById('resumen');
@@ -194,7 +204,7 @@ function cotizarSeguro() {
                        <p>Modelo: ${modelo}</p>
                        <p>Año: ${anio}</p>
                        <p>Tipo: ${tipo}</p>          
-                        <p>Total de la Poliza ${tipo_seguro}: $ ${cantidad}</p> `;
+                       <p>Total de la Poliza ${tipo_seguro}: $ ${cantidad}</p> `;
         console.log(resumen);
         divID.appendChild(div);
     }
@@ -203,4 +213,65 @@ function cotizarSeguro() {
     recuperarCotizacionStorage(datosCotizacion);
 
     const objetoCotizacion = recuperarCotizacionStorage('cotizacion');
+
+    Swal.fire({
+        title: 'Consulta de Poliza',
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar Poliza',
+        cancelButtonText: `Cancelar Poliza`,
+        position: 'center',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            /* location.href ="index.html"; */
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Cotización realizada correctamente!',
+                text: 'Detalle de la Poliza!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            //   borrarStorage();
+            //   setTimeout(recargar, 2000);
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+            console.log("cancelacion");
+            Swal.fire({
+                position: 'center',
+                title: 'Cotización cancelada!',
+                icon: 'success',
+                text: 'La Cotización ha sido borrada',
+                timer: 3000
+
+            })
+            borrarStorage();
+            setTimeout(recargar, 2000);
+        }
+    })
+
+    btnNuevo.addEventListener('click', () => {
+        setTimeout(recargar, 2000);
+        // borrarStorage();
+        mensajeNuevoCotizacion();
+    });
+
+    function borrarStorage() {
+        localStorage.clear();
+        document.querySelector("#resumen").innerText = " ";
+    }
+    /* FUNCION PARA RECARGAR LA PÁGINA DESPUES DE CANCELAR */
+    function recargar() {
+        location.reload();
+    }
+// CUANDO EL USUARIO SELECCIONA NUEVA COTIZACION ENVIA MENSAJE 
+    function mensajeNuevoCotizacion(){
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Puedes Generar nueva Poliza!',
+            showConfirmButton: false,
+            timer: 4000
+          })
+    }
+
 }

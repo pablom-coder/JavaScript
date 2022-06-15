@@ -22,8 +22,8 @@
                         <div class="col col-md-10 mr-md-auto ml-md-auto">
                             <form action="#" id="cotizar-seguro">
                                 <div class="form-group">
-                                    <label for="dominio">Ingrese Dominio: </label>                                   
-                                    <input class="form-control" id="dominio" type="text"/>                                    
+                                    <label for="dominio">Ingrese Dominio: </label>
+                                    <input class="form-control" id="dominio" type="text" />
                                 </div>
                                 <div class="form-group">
                                     <label for="marca">Seleccione Marca: </label>
@@ -41,12 +41,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="tipo">Tipo Vehículo:</label>
-                                    <select name="tipo" class="form-control" id="tipo">                                       
+                                    <select name="tipo" class="form-control" id="tipo">
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="anio">Año:</label>
-                                    <input class="form-control" id="anio" type="number" min="1990" max="2022"/>
+                                    <input class="form-control" id="anio" type="number" min="1990" max="2022" />
                                 </div>
                                 <fieldset class="form-group">
                                     <div class="row">
@@ -58,15 +58,20 @@
                                                 <option value="">- Seleccionar -</option>
                                                 <option value="BASICA">BASICA</option>
                                                 <option value="COMPLETA">COMPLETA</option>
-                                            </select>                                            
+                                            </select>
                                         </div>
                                     </div>
                                 </fieldset>
 
-                                
+
                                 <div id="resultado"></div>
                                 <div class="form-group">
                                     <button type="button" id="cotizar" class="btn btn-raised btn-primary">Cotizar
+                                    </button>
+                                    <!-- <button type="button" id="mostrar" class="btn btn-raised btn-primary">Mostrar Cotizacion
+                                    </button> -->
+                                    <button type="button" id="nuevo" class="btn btn-raised btn-primary">Nueva
+                                        Cotización
                                     </button>
                                 </div>
                             </form>
@@ -80,7 +85,12 @@
 
     <div class="container_resumen" id="resumen">
 
-    </div>    
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@2.3.1/build/global/luxon.min.js"></script>
     <script src="./js/script.js"></script>
 </body>
 
