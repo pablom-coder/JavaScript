@@ -4,8 +4,10 @@ const modelo = document.getElementById('modelo');
 const anio = document.getElementById('anio');
 const tipo = document.getElementById('tipo');
 const tipo_seguro = document.getElementById('tipo_seguro');
+const contenedor_card=document.querySelector('#contenido_card');
+
 const btnCotizarSeguro = document.getElementById('cotizar');
-const btnNuevo=document.getElementById('nuevo');
+const btnNuevo = document.getElementById('nuevo');
 const btnRemover = document.getElementById('removDiv');
 const btnLimpiar = document.getElementById('limpiar');
 const contenido = document.getElementById('contenido');
@@ -16,59 +18,73 @@ btnCotizarSeguro.addEventListener('click', cotizarSeguro);
 const vehiculos = [{
     marca: 'RENAULT',
     modelo: 'SANDERO',
-    tipo: 'NACIONAL'
+    tipo: 'NACIONAL',
+    imagen: './images/sandero.jpg'
 }, {
     marca: 'RENAULT',
     modelo: 'STEPWAY',
-    tipo: 'NACIONAL'
+    tipo: 'NACIONAL',
+    imagen: './images/stepway.jpg'
 }, {
     marca: 'RENAULT',
     modelo: 'LOGAN',
-    tipo: 'NACIONAL'
+    tipo: 'NACIONAL',
+    imagen: './images/logan.jpg'
 }, {
     marca: 'RENAULT',
     modelo: 'KANGOO',
-    tipo: 'NACIONAL'
+    tipo: 'NACIONAL',
+    imagen: './images/kangoo.jpg'
 }, {
     marca: 'RENAULT',
     modelo: 'KOLEOS',
-    tipo: 'IMPORTADO'
+    tipo: 'IMPORTADO',
+    imagen: './images/koleos.jpg'
 }, {
     marca: 'RENAULT',
     modelo: 'MEGANE',
-    tipo: 'IMPORTADO'
+    tipo: 'IMPORTADO',
+    imagen: './images/megane.jpg'
 }, {
     marca: 'VW',
     modelo: 'GOL',
-    tipo: 'NACIONAL'
+    tipo: 'NACIONAL',
+    imagen: './images/gol.jpg'
 }, {
     marca: 'VW',
     modelo: 'BORA',
-    tipo: 'IMPORTADO'
+    tipo: 'IMPORTADO',
+    imagen: './images/bora.jpg'
 }, {
     marca: 'VW',
     modelo: 'GOLF',
-    tipo: 'IMPORTADO'
+    tipo: 'IMPORTADO',
+    imagen: './images/golf.jpg'
 }, {
     marca: 'TOYOTA',
     modelo: 'COROLLA',
-    tipo: 'IMPORTADO'
+    tipo: 'IMPORTADO',
+    imagen: './images/corolla.jpg'
 }, {
     marca: 'TOYOTA',
     modelo: 'YARIS',
-    tipo: 'IMPORTADO'
+    tipo: 'IMPORTADO',
+    imagen: './images/yaris.jpg'
 }, {
     marca: 'TOYOTA',
     modelo: 'HILUX',
-    tipo: 'IMPORTADO'
+    tipo: 'IMPORTADO',
+    imagen: './images/hilux.jpg'
 }, {
     marca: 'JEEP',
     modelo: 'RENEGATE',
-    tipo: 'IMPORTADO'
+    tipo: 'IMPORTADO',
+    imagen: './images/renegate.jpg'
 }, {
     marca: 'JEEP',
     modelo: 'COMPAC',
-    tipo: 'IMPORTADO'
+    tipo: 'IMPORTADO',
+    imagen: './images/compac.jpg'
 }]
 class COTIZACION {
     constructor(dominio, marca, modelo, anio, tipo, tipo_seguro) {
@@ -85,6 +101,39 @@ class COTIZACION {
 window.onload = mostrarModelo(elegirMarca(vehiculos, marca.value));
 window.onload = mostrarTipoVehiculo(modelo_seleccionado(vehiculos, modelo.value));
 
+function filtrarModelo(array) {
+    let auto = modelo.value;
+    if (!auto) {
+        return array;
+    } else {
+        result = array.filter((e) => e.modelo == auto);
+        console.log(result);//
+        return result;
+        
+    }
+}
+
+// FUNCIÓN PARA AGREGAR AL HTML LOS DATOS OBTENIDOS DEL JSON
+
+function createHTML(array) {
+    contenedor_card.innerHTML = ''
+    array.forEach((autoSel) => {
+        const card = `
+                        <h1 id="marca_imagen">Marca: ${autoSel.marca} </h1>
+                        <div class="card">
+                            <h2 id="modelo_imagen"> Modelo: ${autoSel.modelo}</h2>
+                            <img id="modelo_vehiculos" src="${autoSel.imagen}" class="imagen" alt=""> <br>`
+        contenedor_card.innerHTML = card
+    })
+}
+//Función Asincrona para obtener los datos de Json
+async function RecuperarDatos() {
+    const respuesta = await fetch('./js/data.json');
+    const data = await respuesta.json();
+    createHTML(filtrarModelo(data));
+}
+
+
 function cargarObjetoCotizacion() {
 
     const cotizacion = new COTIZACION(dominio.value, marca.value, modelo.value, anio.value, tipo.value, tipo_seguro.value);
@@ -96,27 +145,24 @@ function elegirMarca(vehiculosUsuarios, marc) {
     const marca_selec = vehiculosUsuarios.filter(marca => marca.marca == marc);
     console.log(marca_selec);
     return marca_selec;
-
 }
 
 function mostrarModelo(vehiculosUsuarios) {
 
-    //    let option=vehiculosUsuarios.filter(mar=>mar.marca==marcaIng);
-    //    console.log(option);
     for (const elemento of vehiculosUsuarios) {
 
         let option = `<option value="${elemento.modelo}" id="cuenta${elemento.modelo}">${elemento.modelo}</option>`;
-        // let option2=`<option value="${elemento.tipo}" id="cuenta${elemento.tipo}">${elemento.tipo}</option>`;
         console.log(option);
         modelo.innerHTML += option;
-        // tipo.innerHTML += option2;
     }
-
 }
 
 function modelo_seleccionado(vehiculosUsuarios, mode) {
     const modelo_selec = vehiculosUsuarios.filter(modelo => modelo.modelo == mode);
+    const imagen_selec= modelo.imagen;
+    console.log(vehiculosUsuarios);
     console.log(modelo_selec);
+    console.log(imagen_selec);
     return modelo_selec;
 }
 
@@ -130,6 +176,24 @@ function mostrarTipoVehiculo(vehiculosUsuarios) {
     }
 }
 
+// function mostrarVehiculo(vehiculosUsuarios) {
+//     for (const elemento of vehiculosUsuarios) {
+//             let varianteElegida = elemento.imagen;
+//             let modelo_selec=elemento.modelo;
+//             let marca_selec=elemento.marca
+//             console.log(modelo_selec);
+//             console.log(varianteElegida);
+//             cambiarImagen(varianteElegida,modelo_selec,marca_selec);
+//     }
+// }
+
+// function cambiarImagen(source,modelo_img,marca_img) {
+//     document.getElementById('modelo_vehiculos').src = source;
+//     document.getElementById('modelo_imagen').innerText=modelo_img;
+//     document.getElementById('marca_imagen').innerText=marca_img;
+// }
+
+
 //Este evento modifica el contenido de los select 
 
 marca.onchange = () => {
@@ -140,7 +204,9 @@ marca.onchange = () => {
 modelo.onchange = () => {
     tipo.innerHTML = "";
     mostrarTipoVehiculo(modelo_seleccionado(vehiculos, modelo.value));
+    // mostrarVehiculo(modelo_seleccionado(vehiculos, modelo.value));
 }
+
 
 // STORAGE Y JSON
 function guardarCotizacionStorage(ca) {
@@ -155,9 +221,6 @@ function recuperarCotizacionStorage(ca) {
     console.log(cotizacion);
     return ca;
 }
-
-
-
 
 function cotizarSeguro() {
     alert("BIENVENIDO");
@@ -208,6 +271,7 @@ function cotizarSeguro() {
         console.log(resumen);
         divID.appendChild(div);
     }
+    RecuperarDatos();
     const datosCotizacion = cargarObjetoCotizacion();
     guardarCotizacionStorage(datosCotizacion);
     recuperarCotizacionStorage(datosCotizacion);
@@ -263,15 +327,15 @@ function cotizarSeguro() {
     function recargar() {
         location.reload();
     }
-// CUANDO EL USUARIO SELECCIONA NUEVA COTIZACION ENVIA MENSAJE 
-    function mensajeNuevoCotizacion(){
+    // CUANDO EL USUARIO SELECCIONA NUEVA COTIZACION ENVIA MENSAJE 
+    function mensajeNuevoCotizacion() {
         Swal.fire({
             position: 'center',
             icon: 'success',
             title: 'Puedes Generar nueva Poliza!',
             showConfirmButton: false,
             timer: 4000
-          })
+        })
     }
 
 }

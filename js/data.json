@@ -1,0 +1,86 @@
+[
+    {
+        "marca": "RENAULT",
+        "modelo": "SANDERO",
+        "tipo": "NACIONAL",
+        "imagen": "./images/sandero.jpg"
+    },
+    {
+        "marca": "RENAULT",
+        "modelo": "STEPWAY",
+        "tipo": "NACIONAL",
+        "imagen": "./images/stepway.jpg"
+    },
+    {
+        "marca": "RENAULT",
+        "modelo": "LOGAN",
+        "tipo": "NACIONAL",
+        "imagen": "./images/logan.jpg"
+    },
+    {
+        "marca": "RENAULT",
+        "modelo": "KANGOO",
+        "tipo": "NACIONAL",
+        "imagen": "./images/kangoo.jpg"
+    },
+    {
+        "marca": "RENAULT",
+        "modelo": "KOLEOS",
+        "tipo": "IMPORTADO",
+        "imagen": "./images/koleos.jpg"
+    },
+    {
+        "marca": "RENAULT",
+        "modelo": "MEGANE",
+        "tipo": "IMPORTADO",
+        "imagen": "./images/megane.jpg"
+    },
+    {
+        "marca": "VW",
+        "modelo": "GOL",
+        "tipo": "NACIONAL",
+        "imagen": "./images/gol.jpg"
+    },
+    {
+        "marca": "VW",
+        "modelo": "BORA",
+        "tipo": "IMPORTADO",
+        "imagen": "./images/bora.jpg"
+    },
+    {
+        "marca": "VW",
+        "modelo": "GOLF",
+        "tipo": "IMPORTADO",
+        "imagen": "./images/golf.jpg"
+    },
+    {
+        "marca": "TOYOTA",
+        "modelo": "COROLLA",
+        "tipo": "IMPORTADO",
+        "imagen": "./images/corolla.jpg"
+    },
+    {
+        "marca": "TOYOTA",
+        "modelo": "YARIS",
+        "tipo": "IMPORTADO",
+        "imagen": "./images/yaris.jpg"
+    },
+    {
+        "marca": "TOYOTA",
+        "modelo": "HILUX",
+        "tipo": "IMPORTADO",
+        "imagen": "./images/hilux.jpg"
+    },
+    {
+        "marca": "JEEP",
+        "modelo": "RENEGATE",
+        "tipo": "IMPORTADO",
+        "imagen": "./images/renegate.jpg"
+    },
+    {
+        "marca": "JEEP",
+        "modelo": "COMPAC",
+        "tipo": "IMPORTADO",
+        "imagen": "./images/compac.jpg"
+    }
+]
