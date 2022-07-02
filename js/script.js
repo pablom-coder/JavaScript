@@ -4,7 +4,7 @@ const modelo = document.getElementById('modelo');
 const anio = document.getElementById('anio');
 const tipo = document.getElementById('tipo');
 const tipo_seguro = document.getElementById('tipo_seguro');
-const contenedor_card=document.querySelector('#contenido_card');
+const contenedor_card = document.querySelector('#contenido_card');
 
 const btnCotizarSeguro = document.getElementById('cotizar');
 const btnNuevo = document.getElementById('nuevo');
@@ -12,80 +12,8 @@ const btnRemover = document.getElementById('removDiv');
 const btnLimpiar = document.getElementById('limpiar');
 const contenido = document.getElementById('contenido');
 btnCotizarSeguro.addEventListener('click', cotizarSeguro);
-// btnRemover.addEventListener('click', mostrar);
+document.getElementById('contenido-formulario2').style.display = 'none';
 
-
-const vehiculos = [{
-    marca: 'RENAULT',
-    modelo: 'SANDERO',
-    tipo: 'NACIONAL',
-    imagen: './images/sandero.jpg'
-}, {
-    marca: 'RENAULT',
-    modelo: 'STEPWAY',
-    tipo: 'NACIONAL',
-    imagen: './images/stepway.jpg'
-}, {
-    marca: 'RENAULT',
-    modelo: 'LOGAN',
-    tipo: 'NACIONAL',
-    imagen: './images/logan.jpg'
-}, {
-    marca: 'RENAULT',
-    modelo: 'KANGOO',
-    tipo: 'NACIONAL',
-    imagen: './images/kangoo.jpg'
-}, {
-    marca: 'RENAULT',
-    modelo: 'KOLEOS',
-    tipo: 'IMPORTADO',
-    imagen: './images/koleos.jpg'
-}, {
-    marca: 'RENAULT',
-    modelo: 'MEGANE',
-    tipo: 'IMPORTADO',
-    imagen: './images/megane.jpg'
-}, {
-    marca: 'VW',
-    modelo: 'GOL',
-    tipo: 'NACIONAL',
-    imagen: './images/gol.jpg'
-}, {
-    marca: 'VW',
-    modelo: 'BORA',
-    tipo: 'IMPORTADO',
-    imagen: './images/bora.jpg'
-}, {
-    marca: 'VW',
-    modelo: 'GOLF',
-    tipo: 'IMPORTADO',
-    imagen: './images/golf.jpg'
-}, {
-    marca: 'TOYOTA',
-    modelo: 'COROLLA',
-    tipo: 'IMPORTADO',
-    imagen: './images/corolla.jpg'
-}, {
-    marca: 'TOYOTA',
-    modelo: 'YARIS',
-    tipo: 'IMPORTADO',
-    imagen: './images/yaris.jpg'
-}, {
-    marca: 'TOYOTA',
-    modelo: 'HILUX',
-    tipo: 'IMPORTADO',
-    imagen: './images/hilux.jpg'
-}, {
-    marca: 'JEEP',
-    modelo: 'RENEGATE',
-    tipo: 'IMPORTADO',
-    imagen: './images/renegate.jpg'
-}, {
-    marca: 'JEEP',
-    modelo: 'COMPAC',
-    tipo: 'IMPORTADO',
-    imagen: './images/compac.jpg'
-}]
 class COTIZACION {
     constructor(dominio, marca, modelo, anio, tipo, tipo_seguro) {
         this.dominio = dominio;
@@ -97,9 +25,9 @@ class COTIZACION {
     }
 }
 
-// window.onload = mostrarMarca(seleccionarMarca(vehiculos, marca.value));
-window.onload = mostrarModelo(elegirMarca(vehiculos, marca.value));
-window.onload = mostrarTipoVehiculo(modelo_seleccionado(vehiculos, modelo.value));
+// window.onload = RecuperarModelo();
+// window.onload = RecuperarTipoVehiculo();
+marca.value = '';
 
 function filtrarModelo(array) {
     let auto = modelo.value;
@@ -107,9 +35,9 @@ function filtrarModelo(array) {
         return array;
     } else {
         result = array.filter((e) => e.modelo == auto);
-        console.log(result);//
+        console.log(result); //
         return result;
-        
+
     }
 }
 
@@ -128,7 +56,7 @@ function createHTML(array) {
 }
 //Función Asincrona para obtener los datos de Json
 async function RecuperarDatos() {
-    const respuesta = await fetch('./js/data.json');
+    const respuesta = await fetch('./js/vehiculos.json');
     const data = await respuesta.json();
     createHTML(filtrarModelo(data));
 }
@@ -140,9 +68,19 @@ function cargarObjetoCotizacion() {
     return cotizacion;
 }
 
-function elegirMarca(vehiculosUsuarios, marc) {
+async function RecuperarModelo() {
+    const respuesta = await fetch('./js/vehiculos.json');
+    const data = await respuesta.json();
 
-    const marca_selec = vehiculosUsuarios.filter(marca => marca.marca == marc);
+    // console.log(modelos_seleccionados);
+    mostrarModelo(elegirMarca(data));
+    // mostrarTipoVehiculo(modelo_seleccionado(data));
+}
+
+function elegirMarca(vehiculosUsuarios) {
+
+    let marca_filtro = marca.value;
+    const marca_selec = vehiculosUsuarios.filter(marca => marca.marca == marca_filtro);
     console.log(marca_selec);
     return marca_selec;
 }
@@ -150,16 +88,23 @@ function elegirMarca(vehiculosUsuarios, marc) {
 function mostrarModelo(vehiculosUsuarios) {
 
     for (const elemento of vehiculosUsuarios) {
-
         let option = `<option value="${elemento.modelo}" id="cuenta${elemento.modelo}">${elemento.modelo}</option>`;
         console.log(option);
         modelo.innerHTML += option;
     }
 }
 
-function modelo_seleccionado(vehiculosUsuarios, mode) {
-    const modelo_selec = vehiculosUsuarios.filter(modelo => modelo.modelo == mode);
-    const imagen_selec= modelo.imagen;
+async function RecuperarTipoVehiculo() {
+    const respuesta = await fetch('./js/vehiculos.json');
+    const data = await respuesta.json();
+    mostrarTipoVehiculo(modelo_seleccionado(data));
+}
+
+
+function modelo_seleccionado(vehiculosUsuarios) {
+    let modelo_filtro = modelo.value;
+    const modelo_selec = vehiculosUsuarios.filter(modelo => modelo.modelo == modelo_filtro);
+    const imagen_selec = modelo.imagen;
     console.log(vehiculosUsuarios);
     console.log(modelo_selec);
     console.log(imagen_selec);
@@ -176,72 +121,40 @@ function mostrarTipoVehiculo(vehiculosUsuarios) {
     }
 }
 
-// function mostrarVehiculo(vehiculosUsuarios) {
-//     for (const elemento of vehiculosUsuarios) {
-//             let varianteElegida = elemento.imagen;
-//             let modelo_selec=elemento.modelo;
-//             let marca_selec=elemento.marca
-//             console.log(modelo_selec);
-//             console.log(varianteElegida);
-//             cambiarImagen(varianteElegida,modelo_selec,marca_selec);
-//     }
-// }
-
-// function cambiarImagen(source,modelo_img,marca_img) {
-//     document.getElementById('modelo_vehiculos').src = source;
-//     document.getElementById('modelo_imagen').innerText=modelo_img;
-//     document.getElementById('marca_imagen').innerText=marca_img;
-// }
-
-
 //Este evento modifica el contenido de los select 
 
 marca.onchange = () => {
     modelo.innerHTML = "";
-    mostrarModelo(elegirMarca(vehiculos, marca.value));
+    RecuperarModelo();
 }
 
 modelo.onchange = () => {
     tipo.innerHTML = "";
-    mostrarTipoVehiculo(modelo_seleccionado(vehiculos, modelo.value));
-    // mostrarVehiculo(modelo_seleccionado(vehiculos, modelo.value));
+    RecuperarTipoVehiculo();
+    RecuperarDatos();
 }
 
-
-// STORAGE Y JSON
 function guardarCotizacionStorage(ca) {
-    localStorage.setItem("cotizacion", JSON.stringify(ca));
+    sessionStorage.setItem("cotizacion", JSON.stringify(ca));
     console.log("Prueba Storage Guardar");
 }
 
-
 function recuperarCotizacionStorage(ca) {
-    cotizacion = JSON.parse(localStorage.getItem(ca));
+    cotizacion = JSON.parse(sessionStorage.getItem(ca));
     console.log("Prueba Storage Recuperacion datos");
     console.log(cotizacion);
     return ca;
 }
 
 function cotizarSeguro() {
-    alert("BIENVENIDO");
-
-    const dominio = document.getElementById('dominio').value;
-    const marca = document.getElementById('marca').value;
-    const modelo = document.getElementById('modelo').value;
-    const anio = document.getElementById('anio').value;
-    const tipo = document.getElementById('tipo').value;
-    const tipo_seguro = document.getElementById('tipo_seguro').value;
 
     let cantidad;
     const base = 5000;
     //vehículo nacional se adiciona 10% e importado 20%
 
-    tipo == 'NACIONAL' ? cantidad = base * 1.10 : cantidad = base * 1.20;
-    // const dateTime = luxon.DateTime;
-    // const fecha =dateTime.now();
-    // console.log(fecha.year().toString());
+    tipo.value == 'NACIONAL' ? cantidad = base * 1.10 : cantidad = base * 1.20;
 
-    const diferencia = new Date().getFullYear() - anio;
+    const diferencia = new Date().getFullYear() - anio.value;
     console.log(diferencia);
 
     //por año de antieguedad se decremta un 2% lo acmulado
@@ -251,91 +164,202 @@ function cotizarSeguro() {
 
     //Si la cobertura del seguro es completa la poliza se incrementa 50%, en caso de ser basica un 25%
 
-    tipo_seguro == 'COMPLETA' ? cantidad = cantidad * 1.50 : cantidad = cantidad * 1.25;
+    tipo_seguro.value == 'COMPLETA' ? cantidad = cantidad * 1.50 : cantidad = cantidad * 1.25;
 
-    if (dominio === '' || marca === '' || modelo === '' || anio === '' || tipo_seguro === 'Seleccionar' || tipo === '') {
-        alert("Faltan Datos, revisa e intenta de nuevo");
-    } else {
-        let divID = document.getElementById('resumen');
-        //crear un div
-        const div = document.createElement('div');
-        //insertar la información
-        div.innerHTML = `
-                       <h2>Detalle de la Poliza:</h2>
-                       <p>Dominio: ${dominio}</p>
-                       <p>Marca: ${marca}</p>
-                       <p>Modelo: ${modelo}</p>
-                       <p>Año: ${anio}</p>
-                       <p>Tipo: ${tipo}</p>          
-                       <p>Total de la Poliza ${tipo_seguro}: $ ${cantidad}</p> `;
-        console.log(resumen);
-        divID.appendChild(div);
-    }
-    RecuperarDatos();
-    const datosCotizacion = cargarObjetoCotizacion();
-    guardarCotizacionStorage(datosCotizacion);
-    recuperarCotizacionStorage(datosCotizacion);
-
-    const objetoCotizacion = recuperarCotizacionStorage('cotizacion');
-
-    Swal.fire({
-        title: 'Consulta de Poliza',
-        showCancelButton: true,
-        confirmButtonText: 'Confirmar Poliza',
-        cancelButtonText: `Cancelar Poliza`,
-        position: 'center',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            /* location.href ="index.html"; */
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Cotización realizada correctamente!',
-                text: 'Detalle de la Poliza!',
-                showConfirmButton: false,
-                timer: 1500
-            })
-            //   borrarStorage();
-            //   setTimeout(recargar, 2000);
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-
-            console.log("cancelacion");
-            Swal.fire({
-                position: 'center',
-                title: 'Cotización cancelada!',
-                icon: 'success',
-                text: 'La Cotización ha sido borrada',
-                timer: 3000
-
-            })
-            borrarStorage();
-            setTimeout(recargar, 2000);
-        }
-    })
-
-    btnNuevo.addEventListener('click', () => {
-        setTimeout(recargar, 2000);
-        // borrarStorage();
-        mensajeNuevoCotizacion();
-    });
-
-    function borrarStorage() {
-        localStorage.clear();
-        document.querySelector("#resumen").innerText = " ";
-    }
-    /* FUNCION PARA RECARGAR LA PÁGINA DESPUES DE CANCELAR */
-    function recargar() {
-        location.reload();
-    }
-    // CUANDO EL USUARIO SELECCIONA NUEVA COTIZACION ENVIA MENSAJE 
-    function mensajeNuevoCotizacion() {
+    if (validar() == 'OK') {
         Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Puedes Generar nueva Poliza!',
-            showConfirmButton: false,
-            timer: 4000
+            title: 'Consulta de Poliza',
+            html: `<h3>Dominio: ${dominio.value}<br>
+            Marca: ${marca.value} <br>
+            Modelo: ${modelo.value}  <br>
+            Tipo Vehiculo: ${tipo.value} <br>
+            Cobertura: ${tipo_seguro.value} </h3><br>
+            <h2><b><font color="blue">Total de la Poliza: $ ${cantidad}</font></b></h2>`,
+            showCancelButton: true,
+            confirmButtonText: 'Confirmar Poliza',
+            cancelButtonText: `Cancelar Poliza`,
+            position: 'center'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Cotización realizada correctamente!',
+                    text: 'Detalle de la Poliza!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                const datosCotizacion = cargarObjetoCotizacion();
+                guardarCotizacionStorage(datosCotizacion);
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+                console.log("cancelacion");
+                Swal.fire({
+                    position: 'center',
+                    title: 'Cotización cancelada!',
+                    icon: 'success',
+                    text: 'La Cotización ha sido borrada',
+                    timer: 4000
+                })
+                setTimeout(recargar, 2000);
+                sessionStorage.removeItem("carrito");
+            }
+        })
+    } else {
+        Swal.fire({
+            title: 'Campos Incompletos!!',
+            icon: 'info',
+            timer: 4000,
+            position: 'center'
         })
     }
 
+}
+
+function validar() {
+    if (dominio.value === '' || marca.value === '' || modelo.value === '' || anio.value === '' || tipo_seguro.value === '' || tipo.value === '') {
+        return 'error';
+    } else {
+        return 'OK';
+    }
+}
+
+let divID = document.getElementById('contenido-formulario2');
+
+const rellenarFormularioContacto = () => {
+
+    divID.innerHTML = ` `
+    divID.innerHTML = `
+    <h2 class="text-contacto">Registra tus datos</h2>
+    <div class="contenido-formulario2">
+        <form action="" method="" enctype="">
+
+        <div class="contenido-formulario2">
+            <label class="label-control" for="apellido">Apellido: </label>
+            <input type="text" id="apellido" class="form-control2 " required="text" name="apellido" placeholder="Ingresa Apellido"/>
+        </div>
+
+        <div class="contenido-formulario2">
+            <label class="label-control" for="nombre">Nombres: </label>
+            <input type="text" id="nombre" class="form-control2 " required="text" name="nombre" placeholder="Ingresa Nombres">
+        </div>
+
+        <div class="contenido-formulario2">
+            <label class="label-control" for="email">Tu Email: </label>
+            <input type="email" id="email" class="form-control2" required="email" placeholder="Ingresa Email">
+        </div>
+
+        <div class="contenido-formulario2">
+            <label class="label-control" for="telefono">Telefono: </label>
+            <input type="text" id="telefono" class="form-control2" required="tel" placeholder="Ingresa Teléfono">
+        </div>
+
+        <div class="contenido-formulario2">
+            <label class="label-control" for="codigo_postal">Cod Postal: </label>
+            <input type="text" id="codigo_postal" class="form-control2" required="number" name="cp" placeholder="Ingresa Codigo Postal">
+        </div>
+    
+        <input type="submit" value="Enviar" class="btn_formulario2 submit-btn" id="btnEnviar">    
+        </form>
+    </div>`;
+};
+
+const btn_Contratar = document.getElementById('contratar');
+btn_Contratar.addEventListener('click', () => {
+    if (validar() == 'OK') {
+        document.getElementById('contenido-formulario2').style.display = 'block';
+        rellenarFormularioContacto();
+        const ape = document.querySelector('#apellido');
+        const nomb = document.querySelector('#nombre');
+        const eMail = document.querySelector('#email');
+        const telef = document.querySelector('#telefono');
+        const cp = document.querySelector('#codigo_postal');
+        const btnEnviarInfo = document.querySelector('#btnEnviar');
+
+        btnEnviarInfo.addEventListener('click', (event) => {
+            event.preventDefault();
+            if (validarContacto(ape.value, nombre.value, email.value, telefono.value, codigo_postal.value) == 'OK') {
+                const clientes = {
+                    apellido: ape.value,
+                    nombre: nomb.value,
+                    email: eMail.value,
+                    telefono: telef.value,
+                    codigo_postal: cp.value
+                };
+
+                Swal.fire({
+                    title: 'Gracias por contactarse con Nosotros!!!',
+                    showCancelButton: true,
+                    confirmButtonText: 'Enviar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        localStorage.setItem('clientes', JSON.stringify(clientes))
+                        Swal.fire('Se guardaron los datos, ¡Pronto enviaremos su Poliza Contratada!', '', 'success');
+                        setTimeout(() => {
+                            sessionStorage.removeItem("cotizacion");
+                            setTimeout(recargar, 2000);
+                        }, );
+
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        Swal.fire(
+                            'Los datos no se guardaron. ¡Gracias por su consulta!',
+                            '',
+                            'info'
+                        );
+                        setTimeout(() => {
+                            sessionStorage.removeItem("cotizacion");
+                            setTimeout(recargar, 2000);
+                        }, );
+                    }
+                })
+            } else {
+                Swal.fire({
+                    title: 'Debes completar los datos del contacto!!',
+                    icon: 'info',
+                    timer: 4000,
+                    position: 'center'
+                })
+            }
+        });
+        
+    } else {
+        Swal.fire({
+            title: 'Antes de Contratar debes primero cotizar!!',
+            icon: 'info',
+            timer: 4000,
+            position: 'center'
+        })
+    }
+
+});
+
+function validarContacto(nom, ape, correo, tele, codPostal) {
+    if (nom === '' || ape === '' || correo === '' || tele === '' || codPostal === '') {
+        return 'error';
+    } else {
+        return 'OK'
+    }
+}
+
+btnNuevo.addEventListener('click', () => {
+
+    // sessionStorage.removeItem("cotizacion");
+    sessionStorage.clear();
+    mensajeNuevoCotizacion();
+    setTimeout(recargar, 2000);
+});
+
+/* FUNCION PARA RECARGAR LA PÁGINA DESPUES DE CANCELAR */
+function recargar() {
+    location.reload();
+}
+// CUANDO EL USUARIO SELECCIONA NUEVA COTIZACION ENVIA MENSAJE 
+function mensajeNuevoCotizacion() {
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Puedes Generar nueva Poliza!',
+        showConfirmButton: false,
+        timer: 4000
+    })
 }

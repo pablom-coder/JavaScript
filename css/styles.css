@@ -3,8 +3,8 @@ body {
 }
 
 .btn.btn-raised.btn-primary {
-    background-color: #008f0c !important;
-    font-size: 18px;
+    background-color: #d2cee4 !important;
+    font-size: 16px;
     font-weight: bold;
     /* width: 100%; */
     padding: 15px;
@@ -35,6 +35,7 @@ header h1 {
 .contenido-formulario {
     margin-top: 22px;
     display: flex;
+    height: 500px;
     /* flex-wrap: nowrap; */
 
 }
@@ -59,41 +60,57 @@ header h1 {
         font-size: 18px;
     }
 
-
-.container_resumen{
-    margin-top: 10px;
-    border: 4px solid #26C6DA;
+.container_contacto {
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    margin: 30px;
+    padding: 50px;
+    /* height: 600px; */
+    width: 700px;
+    font-size: 20px;
     text-align: center;
-    padding: 20px 0 20px 0;
-    }
-    .container_resumen h2{
-        font-size: 26px;
-    }
-    .container_resumen p{
-        font-size: 22px;
-        
-    }
-
-
-/* #resultado {
-    margin-bottom: 40px;
+    border: 4px solid #253d41;
 }
-
-#resultado div {
-    border: 1px solid #26C6DA;
-    text-align: center;
-    padding: 0 0 20px 0;
-}
-
-#resultado div p {
-    margin-bottom: 0;
-}
-
-#resultado div p.header {
-    background-color: #26C6DA;
-    margin-bottom: 10px;
-    color: white;
-    padding: 10px;
-    text-transform: uppercase;
+    .form-control2{
+        font-size: 18px;
+        width: 400px;
+        height: 25px;
+        /* margin-left: 20px; */
+        text-align: center;
+        /* padding: 10px; */
+        margin: 6px;
+    }
+    .text-contacto{
+        text-align: center;
+        width: 800px;
+    }
+    .label-control{
+        width: 20px;
+    }
+.btn_formulario2{
+    font-size: 22px;
+    width: 100px;
+    padding: 5px;
+    border:#862451 2px solid;
+    color:#8f265b;
     font-weight: bold;
-} */
+    border-radius: 10px;
+    background-color: rgb(255, 230, 241);
+    margin-top: 20px;
+    margin-left: 150px;
+    transition: all 0.5s;
+}
+.footer {
+    background-color: #be95a8;
+    color:#9b6f85;
+    width: 100%;
+    height: 50px;
+}
+
+.footer_texto{
+    font-size: 16px;
+    text-align: center;
+    padding-top: 10px;
+    color:rgb(26, 9, 5);
+}
